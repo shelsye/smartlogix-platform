@@ -1,0 +1,49 @@
+SMARTLOGIX - EJEMPLOS API REST
+==============================
+
+Todas las peticiones externas usan el API Gateway:
+http://localhost:8080
+
+1) LOGIN ADMINISTRADOR
+POST /api/auth/login
+{
+  "credential": "admin@smartlogix.com",
+  "password": "admin1"
+}
+
+2) REGISTRO CLIENTE
+POST /api/auth/register
+{
+  "firstName": "Ana",
+  "lastName": "Torres",
+  "email": "ana@example.com",
+  "password": "clave123"
+}
+
+3) CATÁLOGO PÚBLICO
+GET /api/inventory/catalog
+
+4) REGIONES (requiere JWT)
+GET /api/shipments/regions
+
+5) RECOMENDACIONES (requiere JWT)
+POST /api/shipments/recommendations
+{
+  "region": "Valparaíso",
+  "units": 2
+}
+
+6) CREAR ORDEN CLIENTE (requiere JWT)
+POST /api/orders
+{
+  "customerName": "Ana Torres",
+  "shippingAddress": "Av. Libertad 100, Viña del Mar",
+  "shippingRegion": "Valparaíso",
+  "shippingType": "MEJOR_RUTA",
+  "lines": [
+    { "sku": "SKU-CREADO", "quantity": 1 }
+  ],
+  "couponCode": "BIENVENIDA10"
+}
+
+Los precios no se envían desde el cliente. order-service los consulta directamente a inventory-service.

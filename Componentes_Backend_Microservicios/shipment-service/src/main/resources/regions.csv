@@ -1,0 +1,17 @@
+region;distanceKm;remoteFactor;economyCarrier;balancedCarrier;expressCarrier
+Arica y Parinacota;2050;1.35;Starken;Blue Express;Chilexpress
+Tarapacá;1780;1.28;Starken;Blue Express;Chilexpress
+Antofagasta;1370;1.20;Starken;Blue Express;Chilexpress
+Atacama;810;1.12;Starken;Blue Express;Chilexpress
+Coquimbo;470;1.06;Starken;Blue Express;Chilexpress
+Valparaíso;120;1.00;Starken;Blue Express;Chilexpress
+Metropolitana de Santiago;35;0.96;Starken;Blue Express;Chilexpress
+O'Higgins;110;1.00;Starken;Blue Express;Chilexpress
+Maule;260;1.03;Starken;Blue Express;Chilexpress
+Ñuble;405;1.07;Starken;Blue Express;Chilexpress
+Biobío;510;1.09;Starken;Blue Express;Chilexpress
+La Araucanía;690;1.12;Starken;Blue Express;Chilexpress
+Los Ríos;850;1.16;Starken;Blue Express;Chilexpress
+Los Lagos;1030;1.20;Starken;Blue Express;Chilexpress
+Aysén;1650;1.42;Starken;Blue Express;Chilexpress
+Magallanes;3000;1.55;Starken;Blue Express;Chilexpress

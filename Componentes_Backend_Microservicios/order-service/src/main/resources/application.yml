@@ -1,0 +1,34 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:h2:file:/data/orderdb;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+jwt:
+  secret: ${JWT_SECRET:SmartLogixSuperSecretKeyForJWT2024PlatformMicroservicesArchitecture!!}
+
+smartlogix:
+  internal-api-key: ${SMARTLOGIX_INTERNAL_API_KEY:SmartLogixInternalKey2026!}
+  welcome-coupon-code: ${SMARTLOGIX_WELCOME_COUPON_CODE:BIENVENIDA10}
+  welcome-coupon-percent: ${SMARTLOGIX_WELCOME_COUPON_PERCENT:10}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}

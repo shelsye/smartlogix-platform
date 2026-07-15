@@ -1,0 +1,36 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: price-finder-service
+  datasource:
+    url: jdbc:h2:file:/data/pricefinderdb;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+smartlogix:
+  price-finder:
+    serpapi-key: ${SERPAPI_KEY:}
+    country: ${PRICE_FINDER_COUNTRY:cl}
+    language: ${PRICE_FINDER_LANGUAGE:es}
+    currency: ${PRICE_FINDER_CURRENCY:CLP}
+    google-domain: ${PRICE_FINDER_GOOGLE_DOMAIN:google.cl}
+    mercado-libre-site: ${PRICE_FINDER_ML_SITE:MLC}
+    request-timeout-seconds: ${PRICE_FINDER_TIMEOUT_SECONDS:12}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}

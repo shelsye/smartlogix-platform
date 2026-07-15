@@ -1,0 +1,39 @@
+package com.smartlogix.order.dto;
+
+import com.smartlogix.order.domain.OrderStatus;
+import com.smartlogix.order.domain.PaymentStatus;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.List;
+
+public record OrderResponse(
+        String orderNumber,
+        String customerName,
+        String customerEmail,
+        String shippingAddress,
+        String shippingRegion,
+        String shippingType,
+        String shippingCarrier,
+        String shippingRouteName,
+        String shippingRouteCode,
+        Integer shippingEstimatedDays,
+        Integer shippingDistanceKm,
+        LocalDate shippingEstimatedDeliveryDate,
+        BigDecimal shippingPrice,
+        BigDecimal subtotal,
+        BigDecimal discountAmount,
+        BigDecimal totalAmount,
+        boolean discountApplied,
+        String couponCode,
+        OrderStatus status,
+        String trackingCode,
+        String reason,
+        OffsetDateTime createdAt,
+        OffsetDateTime updatedAt,
+        PaymentStatus paymentStatus,
+        String paymentReference,
+        String maskedCard,
+        String receiptNumber,
+        List<OrderLineResponse> lines
+) {}

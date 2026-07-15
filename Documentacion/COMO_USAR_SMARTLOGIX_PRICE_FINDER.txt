@@ -1,0 +1,51 @@
+SMARTLOGIX PRICE FINDER - FUNCIONALIDAD EXAMEN TRANSVERSAL
+
+Funcionalidad agregada:
+Comparador de precios reales multitienda y multiproducto con compra simbólica.
+
+Qué hace:
+1. El cliente inicia sesión.
+2. Entra a la sección "Comparar precios".
+3. Busca cualquier producto: notebook gamer, mouse, audífonos, celular, monitor, etc.
+4. El frontend llama a GET /api/price-finder/search?query=...
+5. El backend consulta fuentes reales.
+6. El backend ordena resultados de menor a mayor precio.
+7. El sistema destaca la opción más barata.
+8. El cliente puede presionar "Simular compra".
+9. SmartLogix registra una orden simbólica mediante POST /api/orders/symbolic-external.
+10. Se genera orden y boleta ficticia dentro del sistema.
+
+Importante:
+La búsqueda es real.
+La compra es simbólica.
+SmartLogix no compra de verdad en tiendas externas.
+SmartLogix no procesa pagos externos.
+No se almacena CVV ni datos bancarios reales.
+
+Endpoints agregados:
+GET  /api/price-finder/search?query=notebook gamer&limit=24
+GET  /api/price-finder/history
+POST /api/orders/symbolic-external
+
+Microservicio agregado:
+price-finder-service
+Puerto interno: 8088
+Ruta por API Gateway: /api/price-finder/**
+
+Para multitienda real completa:
+Configurar la variable SERPAPI_KEY antes de levantar Docker.
+
+PowerShell:
+$env:SERPAPI_KEY="TU_API_KEY"
+docker compose up --build
+
+Sin SERPAPI_KEY:
+El sistema igualmente hace búsqueda real usando Mercado Libre Chile como fuente disponible.
+Para que salgan hartas tiendas como PC Factory, Falabella, Ripley, Paris, Lider, SP Digital, etc., se debe configurar SERPAPI_KEY.
+
+Evidencia para el profe:
+1. F12 > Red/Network > GET /api/price-finder/search > 200 OK
+2. Mostrar varias tiendas/resultados ordenados por precio.
+3. POST /api/orders/symbolic-external > 201 Created
+4. Mostrar orden y boleta simbólica en Mis órdenes.
+5. En admin, entrar a "Búsquedas" para ver historial persistido.

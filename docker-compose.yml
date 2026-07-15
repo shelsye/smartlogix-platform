@@ -1,0 +1,162 @@
+name: smartlogix
+
+x-common-env: &common-env
+  EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+  JWT_SECRET: SmartLogixSuperSecretKeyForJWT2024PlatformMicroservicesArchitecture!!
+  SMARTLOGIX_INTERNAL_API_KEY: SmartLogixInternalKey2026!
+  SMARTLOGIX_WELCOME_COUPON_CODE: BIENVENIDA10
+  SMARTLOGIX_WELCOME_COUPON_PERCENT: 10
+  SERPAPI_KEY: ${SERPAPI_KEY:-}
+
+x-health: &health
+  interval: 10s
+  timeout: 5s
+  retries: 20
+  start_period: 20s
+
+services:
+  discovery-service:
+    build:
+      context: .
+      dockerfile: Componentes_Backend_Microservicios/discovery-service/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8762:8761"
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8761/actuator/health"]
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: Componentes_Backend_Microservicios/auth-service/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+      SMARTLOGIX_ADMIN_EMAIL: admin@smartlogix.com
+      SMARTLOGIX_ADMIN_PASSWORD: admin1
+      SMARTLOGIX_ADMIN_FIRST_NAME: Administrador
+      SMARTLOGIX_ADMIN_LAST_NAME: SmartLogix
+    volumes:
+      - auth_data:/data
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8084/actuator/health"]
+
+  inventory-service:
+    build:
+      context: .
+      dockerfile: Componentes_Backend_Microservicios/inventory-service/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+    volumes:
+      - inventory_data:/data
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8081/actuator/health"]
+
+  shipment-service:
+    build:
+      context: .
+      dockerfile: Componentes_Backend_Microservicios/shipment-service/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+    volumes:
+      - shipment_data:/data
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8083/actuator/health"]
+
+  order-service:
+    build:
+      context: .
+      dockerfile: Componentes_Backend_Microservicios/order-service/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      auth-service:
+        condition: service_healthy
+      inventory-service:
+        condition: service_healthy
+      shipment-service:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+    volumes:
+      - order_data:/data
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8082/actuator/health"]
+
+  price-finder-service:
+    build:
+      context: .
+      dockerfile: Componentes_Backend_Microservicios/price-finder-service/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+      PRICE_FINDER_COUNTRY: cl
+      PRICE_FINDER_LANGUAGE: es
+      PRICE_FINDER_CURRENCY: CLP
+      PRICE_FINDER_GOOGLE_DOMAIN: google.cl
+      PRICE_FINDER_ML_SITE: MLC
+    volumes:
+      - pricefinder_data:/data
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8088/actuator/health"]
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Componentes_Backend_Microservicios/api-gateway/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      auth-service:
+        condition: service_healthy
+      inventory-service:
+        condition: service_healthy
+      order-service:
+        condition: service_healthy
+      shipment-service:
+        condition: service_healthy
+      price-finder-service:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+    ports:
+      - "8080:8080"
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/actuator/health"]
+
+  frontend:
+    build:
+      context: Componente_Frontend/frontend/fron_smart_logix
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      api-gateway:
+        condition: service_healthy
+    ports:
+      - "3000:80"
+
+volumes:
+  auth_data:
+  inventory_data:
+  order_data:
+  shipment_data:
+  pricefinder_data:

@@ -1,0 +1,18 @@
+===================================================================
+                  EVALUACIÓN 2 - SMARTLOGIX PLATFORM
+===================================================================
+
+A continuación se detallan los enlaces a los repositorios de GitHub 
+con la entrega de la estructura completa del proyecto, cumpliendo 
+con los requerimientos de modularidad y separación de componentes.
+
+1. REPOSITORIO PRINCIPAL (Estructura Completa y Documentación)
+   Link: https://github.com/shelsye/smartlogix-platform.git
+
+2. REPOSITORIO INDEPENDIENTE - COMPONENTE FRONTEND (React)
+   Link: https://github.com/shelsye/smartlogix-frontend.git
+
+3. REPOSITORIO INDEPENDIENTE - COMPONENTES BACKEND (Microservicios Spring Boot)
+   Link: https://github.com/shelsye/smartlogix-backend-services.git
+
+===================================================================

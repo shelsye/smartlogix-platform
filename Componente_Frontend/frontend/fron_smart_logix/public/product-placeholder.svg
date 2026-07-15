@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">Producto SmartLogix</title>
+  <desc id="desc">Imagen predeterminada para productos sin fotografía registrada.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07050d"/>
+      <stop offset="0.55" stop-color="#52057B"/>
+      <stop offset="1" stop-color="#892CDC"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="640" height="420" rx="28" fill="url(#bg)"/>
+  <circle cx="320" cy="185" r="92" fill="none" stroke="#BC6FF1" stroke-width="8" opacity=".9" filter="url(#glow)"/>
+  <path d="M268 168h104l-12 82h-80z" fill="none" stroke="#fff" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M291 168c0-21 12-37 29-37s29 16 29 37" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+  <text x="320" y="325" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="34" font-weight="700">SmartLogix</text>
+  <text x="320" y="360" text-anchor="middle" fill="#e8d7f5" font-family="Arial, sans-serif" font-size="18">Imagen de producto</text>
+</svg>
